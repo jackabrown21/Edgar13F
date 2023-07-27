@@ -103,4 +103,3 @@ class SecEdgarScraper:
                 final_list_of_every_single_xml_file_to_download.append(self.get_the_xml_link_we_want_to_download(list))
 
             self.download_files_from_links(final_list_of_every_single_xml_file_to_download, directory=f'{self.data_path}/{company_name}')
-
