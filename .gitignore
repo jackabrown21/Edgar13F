@@ -1,2 +1,7 @@
 .DS_Store
 .env
+# .gitignore
+dist
+*.egg-info
+__pycache__
+*.py[cod]
