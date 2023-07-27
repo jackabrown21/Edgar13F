@@ -11,6 +11,7 @@ To install this package, clone this repository, navigate to its directory, and t
 git clone https://github.com/jackabrown21/Edgar13F.git
 cd Edgar13F
 pip install .
+```
 
 
 Duplicate the `.env.example` file, rename it to `.env`, and replace the dummy values with your actual values.
@@ -31,3 +32,4 @@ data_path = 'data/raw/' # Folder where you would like the XMLs to be downloaded 
 
 scraper = SecEdgarScraper(companies, base_file_path, data_path)
 scraper.scrape()
+```
