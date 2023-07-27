@@ -7,6 +7,7 @@ A Python package for scraping 13F filings from the SEC Edgar database.
 To install this package, clone this repository, navigate to its directory, and then use pip:
 
 ## Usage
+```bash
 git clone https://github.com/jackabrown21/Edgar13F.git
 cd Edgar13F
 pip install .
