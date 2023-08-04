@@ -1,1 +1,1 @@
-from .scraper import SecEdgarScraper
+from .Edgar13F import SecEdgarScraper
