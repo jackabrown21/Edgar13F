@@ -49,11 +49,12 @@ class SecEdgarScraper:
     def get_links(url):
         headers = SecEdgarScraper.get_headers()
         response = requests.get(url, headers=headers)
+        page_links = []
+
         if response.status_code == 200:
             page_content = response.content
             soup = BeautifulSoup(page_content, 'html.parser')
             links = soup.find_all('a')
-            page_links = []
             for link in links:
                 href = link.get('href')
                 if href:
@@ -62,11 +63,10 @@ class SecEdgarScraper:
 
     @staticmethod
     def get_the_xml_link_we_want_to_download(link_list):
-        the_xmls_on_that_page = []
-        for link in link_list:
-            if link.endswith("xml"):
-                the_xmls_on_that_page.append(link)
-        return "https://www.sec.gov/" + the_xmls_on_that_page[-1]
+        if not link_list:
+            return None
+        the_xmls_on_that_page = [link for link in link_list if link.endswith("xml")]
+        return "https://www.sec.gov/" + the_xmls_on_that_page[-1] if the_xmls_on_that_page else None
 
     def download_files_from_links(self, links, directory):
         headers = self.get_headers()
@@ -99,7 +99,9 @@ class SecEdgarScraper:
                 huge_list_of_lists_of_every_single_link_on_every_single_filing.append(self.get_links(i))
 
             final_list_of_every_single_xml_file_to_download = []
-            for list in huge_list_of_lists_of_every_single_link_on_every_single_filing:
-                final_list_of_every_single_xml_file_to_download.append(self.get_the_xml_link_we_want_to_download(list))
+            for link_list in huge_list_of_lists_of_every_single_link_on_every_single_filing:  # Renamed the loop variable from `list` to `link_list` for clarity
+                xml_link = self.get_the_xml_link_we_want_to_download(link_list)
+                if xml_link:  # Check if xml_link is not None before appending
+                    final_list_of_every_single_xml_file_to_download.append(xml_link)
 
             self.download_files_from_links(final_list_of_every_single_xml_file_to_download, directory=f'{self.data_path}/{company_name}')
